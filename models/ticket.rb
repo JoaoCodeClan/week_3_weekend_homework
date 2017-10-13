@@ -5,10 +5,14 @@ require_relative("../db/sql_runner.rb")
 
 class Customer
 
-attr_accessor()
-def initialize()
+  attr_accessor(:customer_id, :film_id)
+  attr_reader(:id)
 
-end
+  def initialize(ticket)
+    @id = ticket['id'].to_i if ticket['id']
+    @customer_id = ticket['customer_id']
+    @film_id = ticket["film_id"]
+  end
 
 
 end
