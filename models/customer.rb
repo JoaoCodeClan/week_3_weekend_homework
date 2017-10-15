@@ -63,5 +63,22 @@ class Customer
 
   end
 
+  def count_films()
+    sql= "SELECT films.* FROM films INNER JOIN tickets on films.id = film_id WHERE customer_id = $1"
+    values = [@id]
 
-end
+    results = SqlRunner.run(sql,values)
+
+    array_results = results.map {|film| Film.new(film)}
+    return array_results.count
+
+  end
+
+  def buy_ticket(film)
+    @funds -= film.price
+    ticket = Ticket.new({'customer_id'=> @id, 'film_id'=> film.id})
+    ticket.save()
+      update()
+    end
+
+  end
